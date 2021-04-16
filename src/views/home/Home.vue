@@ -27,7 +27,6 @@
 </template>
 
 <script>
-
   import NavBar from "components/common/navbar/NavBar";
   import TabControl from "components/content/tabControl/TabControl";
   import GoodsList from "../../components/content/goods/GoodsList";
@@ -40,6 +39,7 @@
   import FeatureView from "./chilcomponent/FeatureView";
 
   import {getHomeMultidata,getHomeGoods} from "../../network/home";
+  import {debounce} from "common/utils";
 
   export default {
     name: "Home",
@@ -80,11 +80,21 @@
       this.getHomeGoods('pop');
       this.getHomeGoods('new');
       this.getHomeGoods('sell');
+
+    },
+    mounted() {
+      //3.监听item中图片加载完成
+      const refresh = debounce(this.$refs.scroll.refresh,300)
+      this.$bus.$on('itemImageLoad',() => {
+
+        refresh()
+      })
     },
     methods: {
       /**
        * 事件监听相关方法
        */
+
       tabClick(index) {
         switch (index) {
           case 0:
@@ -107,7 +117,7 @@
       loadMore() {
         this.getHomeGoods(this.currentType)
         this.$refs.scroll.finishPullUp();
-        this.$refs.scroll.scroll.refresh()
+        // this.$refs.scroll.scroll.refresh()
       },
       /**
        * 网络请求相关方法
