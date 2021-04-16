@@ -39,15 +39,21 @@
         })
 
         // 2.监听滚动的位置
-        this.scroll.on('scroll', (position) => {
+        if(this.probeType == 2 || this.probeType == 3) {
+          this.scroll.on('scroll', (position) => {
 
-          this.$emit('scroll', position)
-        })
+            this.$emit('scroll', position)
+          })
+        }
 
-        // 3.监听上拉事件
-        this.scroll.on('pullingUp', () => {
-          this.$emit('pullingUp')
-        })
+       if(this.pullUpLoad) {
+         // 3.监听上拉事件
+         this.scroll.on('pullingUp', () => {
+           this.$emit('pullingUp')
+         })
+       }
+
+
       },3000)
     },
     methods: {

@@ -14,7 +14,8 @@
       <tab-control
         class="tab-control"
         :titles="['流行','新款','精选']"
-        @tabClick="tabClick"/>
+        @tabClick="tabClick"
+        ref="tabControl"/>
       <goods-list :goods="showGoods"/>
     </scroll>
 
@@ -53,7 +54,8 @@
           'sell': {page: 0,list: []}
         },
         currentType: 'pop',
-        isShowBackTop: false
+        isShowBackTop: false,
+        tabOffsetTop: 0
       }
     },
     computed: {
@@ -83,6 +85,7 @@
 
     },
     mounted() {
+      this.tabOffsetTop = this.$refs.tabControl
       //3.监听item中图片加载完成
       const refresh = debounce(this.$refs.scroll.refresh,300)
       this.$bus.$on('itemImageLoad',() => {
