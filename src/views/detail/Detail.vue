@@ -148,6 +148,7 @@
         product.realPrice = this.goods.realPrice
 
         //2.将商品添加到购物车里
+        this.$store.dispatch('addCart',product)
       }
     }
   }
